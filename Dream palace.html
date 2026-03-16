@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hotel Dream Palace — Bhairahawa, Nepal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,700&family=Raleway:wght@300;400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --abyss:#040D1A;
+  --deep:#071526;
+  --navy:#0B1D35;
+  --navy-mid:#0F2545;
+  --navy-lift:#142E55;
+  --blue-rich:#1B3A6B;
+  --blue-mid:#245092;
+  --blue:#2C5F9E;
+  --blue-soft:#3D74B8;
+  --blue-accent:#5B8DB8;
+  --blue-pale:#8AAECE;
+  --steel:#A8BFCC;
+  --mist:#C5D5E0;
+  --white:#FFFFFF;
+  --cream:#F4F7FA;
+  --pearl:#EBF0F5;
+  --fog:#DEE6EE;
+  --text-bright:#F0F5FA;
+  --text-light:#CDD8E3;
+  --text-muted:#8299AE;
+  --text-dark:#0A1828;
+  --text-mid:#1C3250;
+  --text-soft:#3D5978;
+  --shadow-card:0 4px 32px rgba(4,13,26,0.45);
+  --shadow-lift:0 16px 56px rgba(4,13,26,0.55);
+  --border-dim:rgba(91,141,184,0.14);
+  --border-mid:rgba(91,141,184,0.26);
+  --border-bright:rgba(91,141,184,0.48);
+  --transition:cubic-bezier(0.4,0,0.2,1);
+}
+html{scroll-behavior:smooth;overflow-x:hidden}
+body{font-family:'Raleway',sans-serif;background:var(--navy);color:var(--text-bright);overflow-x:hidden}
+#scroll-progress{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--blue-rich),var(--blue-soft),var(--blue-pale));z-index:99997;width:0%;box-shadow:0 0 10px rgba(44,95,158,0.45)}
+
+/* LOADER */
+#loader{position:fixed;inset:0;background:radial-gradient(ellipse at 50% 45%,var(--navy-mid) 0%,var(--abyss) 70%);z-index:99999;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity 0.8s ease,visibility 0.8s ease;overflow:hidden}
+#loader::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 50% 50%,rgba(27,58,107,0.18) 0%,transparent 65%);animation:glowB 3s ease-in-out infinite}
+@keyframes glowB{0%,100%{opacity:.4;transform:scale(.95)}50%{opacity:1;transform:scale(1.05)}}
+#loader.hidden{opacity:0;visibility:hidden}
+.loader-logo-wrap{position:relative;display:flex;flex-direction:column;align-items:center;animation:lPop 1s cubic-bezier(.34,1.56,.64,1) forwards}
+@keyframes lPop{0%{transform:scale(.15) translateY(100px);opacity:0}65%{transform:scale(1.08) translateY(-8px);opacity:1}100%{transform:scale(1) translateY(0);opacity:1}}
+#loader-logo-img{width:170px;height:170px;object-fit:contain;filter:drop-shadow(0 0 24px rgba(91,141,184,.55)) drop-shadow(0 0 55px rgba(27,58,107,.3));transition:all .6s}
+.loader-rings{position:absolute;width:240px;height:240px;top:50%;left:50%;transform:translate(-50%,-50%)}
+.loader-ring{position:absolute;inset:0;border-radius:50%;border:1px solid rgba(91,141,184,.18);animation:rExp 2.5s ease-out infinite}
+.loader-ring:nth-child(2){inset:-22px;border-color:rgba(91,141,184,.1);animation-delay:.65s}
+.loader-ring:nth-child(3){inset:-44px;border-color:rgba(91,141,184,.05);animation-delay:1.3s}
+@keyframes rExp{0%{transform:scale(.85);opacity:0}40%{opacity:1}100%{transform:scale(1.25);opacity:0}}
+.loader-title{font-family:'Playfair Display',serif;font-size:1.8rem;color:var(--text-bright);letter-spacing:.45em;margin-top:1.4rem;text-shadow:0 2px 20px rgba(91,141,184,.35);animation:tS 2s ease-in-out infinite}
+@keyframes tS{0%,100%{opacity:.8}50%{opacity:1}}
+.loader-subtitle{font-family:'Raleway',sans-serif;font-size:.66rem;font-weight:600;color:var(--text-muted);letter-spacing:.5em;margin-top:.5rem;text-transform:uppercase}
+.loader-bar{width:200px;height:1px;background:rgba(91,141,184,.12);margin-top:2.8rem;overflow:hidden}
+.loader-bar-fill{height:100%;background:linear-gradient(90deg,var(--blue-rich),var(--blue-soft),var(--blue-pale));width:0%;animation:lBar 2.3s ease forwards;box-shadow:0 0 10px rgba(91,141,184,.5)}
+@keyframes lBar{0%{width:0%}100%{width:100%}}
+
+/* NAVBAR */
+#navbar{position:fixed;top:0;left:0;right:0;z-index:1000;padding:.9rem 5%;display:flex;align-items:center;justify-content:space-between;transition:all .4s var(--transition);background:rgba(4,13,26,.08);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-bottom:1px solid rgba(91,141,184,.06)}
+#navbar.scrolled{padding:.65rem 5%;background:rgba(7,21,38,.96);border-bottom:1px solid var(--border-dim);box-shadow:0 4px 40px rgba(4,13,26,.6)}
+.nav-logo{display:flex;align-items:center;gap:.75rem;text-decoration:none}
+.nav-logo-img{width:50px;height:50px;object-fit:contain;transition:transform .3s;filter:drop-shadow(0 2px 8px rgba(27,58,107,.45))}
+.nav-logo:hover .nav-logo-img{transform:scale(1.05)}
+.nav-logo-text{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;color:var(--text-bright);letter-spacing:.04em;line-height:1.1}
+.nav-logo-sub{font-family:'Raleway',sans-serif;font-size:.58rem;font-weight:600;color:var(--text-muted);letter-spacing:.22em;text-transform:uppercase;display:block}
+.nav-links{display:flex;list-style:none;gap:2.2rem;align-items:center}
+.nav-links a{font-family:'Raleway',sans-serif;font-size:.68rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--text-light);text-decoration:none;position:relative;transition:color .3s}
+.nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;background:var(--blue-pale);transition:width .35s var(--transition)}
+.nav-links a:hover{color:var(--text-bright)}
+.nav-links a:hover::after{width:100%}
+.nav-cta{font-family:'Raleway',sans-serif;font-size:.66rem;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(--text-bright);background:transparent;border:1px solid var(--border-bright);padding:.65rem 1.6rem;cursor:pointer;position:relative;overflow:hidden;transition:all .4s}
+.nav-cta::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--blue-rich),var(--blue-mid));transform:scaleX(0);transform-origin:left;transition:transform .4s var(--transition)}
+.nav-cta:hover{border-color:var(--blue-soft)}
+.nav-cta:hover::before{transform:scaleX(1)}
+.nav-cta span{position:relative;z-index:1}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px}
+.hamburger span{display:block;width:24px;height:1.5px;background:var(--text-light);transition:all .3s;transform-origin:center}
+.hamburger.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+.hamburger.open span:nth-child(2){opacity:0;transform:scaleX(0)}
+.hamburger.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
+#nav-drawer{position:fixed;top:0;right:-100%;width:min(340px,100vw);height:100vh;background:var(--abyss);z-index:999;display:flex;flex-direction:column;justify-content:center;padding:3rem;transition:right .5s var(--transition);border-left:1px solid var(--border-dim)}
+#nav-drawer.open{right:0}
+.drawer-links{list-style:none;display:flex;flex-direction:column;gap:2rem}
+.drawer-links a{font-family:'Playfair Display',serif;font-size:1.7rem;color:var(--text-light);text-decoration:none;transition:all .3s;display:block}
+.drawer-links a:hover{color:var(--text-bright);padding-left:8px}
+.drawer-close{position:absolute;top:2rem;right:2rem;background:none;border:1px solid var(--border-dim);color:var(--text-muted);width:36px;height:36px;font-size:1rem;cursor:pointer;transition:all .3s;display:flex;align-items:center;justify-content:center}
+.drawer-close:hover{border-color:var(--border-mid);color:var(--text-bright)}
+.overlay{position:fixed;inset:0;background:rgba(4,13,26,.75);z-index:998;opacity:0;visibility:hidden;transition:all .4s}
+.overlay.visible{opacity:1;visibility:visible}
+
+/* HERO */
+#hero{position:relative;height:100vh;min-height:700px;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.hero-slides{position:absolute;inset:0}
+.hero-slide{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transform:scale(1.05);transition:opacity 1.8s ease,transform 10s ease}
+.hero-slide.active{opacity:1;transform:scale(1)}
+.hero-slide:nth-child(1){background-image:url('https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=1920&q=80')}
+.hero-slide:nth-child(2){background-image:url('https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=1920&q=80')}
+.hero-slide:nth-child(3){background-image:url('https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1920&q=80')}
+.hero-slide:nth-child(4){background-image:url('https://images.unsplash.com/photo-1600011689032-8b628b8a8747?w=1920&q=80')}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(170deg,rgba(4,13,26,.82) 0%,rgba(11,29,53,.62) 45%,rgba(4,13,26,.88) 100%);z-index:1}
+.hero-grid-lines{position:absolute;inset:0;z-index:2;background-image:linear-gradient(rgba(91,141,184,.022) 1px,transparent 1px),linear-gradient(90deg,rgba(91,141,184,.022) 1px,transparent 1px);background-size:80px 80px;pointer-events:none}
+#hero-canvas{position:absolute;inset:0;z-index:3;pointer-events:none}
+.hero-content{position:relative;z-index:4;text-align:center;padding:2rem}
+.hero-content-inner{padding:3rem 4rem;background:rgba(7,21,38,.32);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(91,141,184,.16);max-width:880px;box-shadow:0 0 80px rgba(4,13,26,.5),inset 0 1px 0 rgba(91,141,184,.07)}
+.hero-eyebrow{font-family:'Cormorant Garamond',serif;font-size:.92rem;font-style:italic;color:var(--blue-pale);letter-spacing:.35em;text-transform:uppercase;opacity:0;animation:fadeUp 1s ease forwards .5s}
+.hero-title{font-family:'Playfair Display',serif;font-size:clamp(2.4rem,5.2vw,4.8rem);font-weight:700;color:var(--text-bright);line-height:1.1;margin:1rem 0;overflow:hidden}
+.hero-title .word{display:inline-block;transform:translateY(110%);opacity:0;animation:wR .8s var(--transition) forwards}
+.hero-title .word:nth-child(1){animation-delay:.8s}.hero-title .word:nth-child(2){animation-delay:1s}.hero-title .word:nth-child(3){animation-delay:1.2s}.hero-title .word:nth-child(4){animation-delay:1.4s}.hero-title .word:nth-child(5){animation-delay:1.6s}
+.hero-title .hl{color:var(--blue-pale)}
+@keyframes wR{to{transform:translateY(0);opacity:1}}
+.hero-sub{font-family:'Cormorant Garamond',serif;font-size:1.18rem;font-style:italic;color:rgba(197,213,224,.78);margin-bottom:2.5rem;opacity:0;animation:fadeUp 1s ease forwards 2s}
+.hero-btns{display:flex;gap:1.2rem;justify-content:center;flex-wrap:wrap;opacity:0;animation:fadeUp 1s ease forwards 2.3s}
+.btn-primary{font-family:'Raleway',sans-serif;font-size:.68rem;font-weight:800;letter-spacing:.22em;text-transform:uppercase;color:var(--text-bright);background:linear-gradient(135deg,var(--blue-rich),var(--blue-mid));border:1px solid rgba(91,141,184,.28);padding:1rem 2.8rem;cursor:pointer;position:relative;overflow:hidden;transition:all .4s;text-decoration:none;display:inline-block;box-shadow:0 6px 28px rgba(4,13,26,.42)}
+.btn-primary::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--blue-mid),var(--blue-soft));transform:translateX(-100%);transition:transform .45s var(--transition)}
+.btn-primary:hover::before{transform:translateX(0)}
+.btn-primary span{position:relative;z-index:1}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 10px 36px rgba(4,13,26,.52)}
+.btn-secondary{font-family:'Raleway',sans-serif;font-size:.68rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--text-light);background:transparent;border:1px solid var(--border-bright);padding:1rem 2.5rem;cursor:pointer;transition:all .4s;text-decoration:none;display:inline-block;position:relative;overflow:hidden}
+.btn-secondary::before{content:'';position:absolute;inset:0;background:rgba(91,141,184,.07);transform:scaleX(0);transform-origin:left;transition:transform .4s var(--transition)}
+.btn-secondary:hover::before{transform:scaleX(1)}
+.btn-secondary:hover{border-color:var(--blue-pale);color:var(--text-bright);transform:translateY(-2px)}
+.hero-scroll{position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);z-index:4;display:flex;flex-direction:column;align-items:center;gap:.5rem;opacity:0;animation:fadeIn 1s ease forwards 3.2s}
+.scroll-text{font-family:'Raleway',sans-serif;font-size:.56rem;font-weight:700;letter-spacing:.4em;text-transform:uppercase;color:var(--text-muted)}
+.scroll-arr{animation:bounce 2.2s ease-in-out infinite}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(10px)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.hero-dots{position:absolute;bottom:2.5rem;right:5%;z-index:4;display:flex;flex-direction:column;gap:.5rem}
+.slide-dot{width:1.5px;height:18px;background:rgba(197,213,224,.18);transition:all .4s;cursor:pointer}
+.slide-dot.active{height:36px;background:var(--blue-pale);box-shadow:0 0 8px rgba(138,174,206,.4)}
+
+/* TRUST BAR */
+#trustbar{background:var(--abyss);padding:2.2rem 5%;border-top:1px solid var(--border-dim);border-bottom:1px solid var(--border-dim);position:relative;overflow:hidden}
+#trustbar::before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(27,58,107,.05),transparent);animation:sweep 4s ease-in-out infinite}
+@keyframes sweep{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
+.tbar-grid{display:grid;grid-template-columns:repeat(4,1fr);max-width:1200px;margin:0 auto;position:relative;z-index:1}
+.tbar-item{text-align:center;padding:1.2rem 2rem;position:relative}
+.tbar-item:not(:last-child)::after{content:'';position:absolute;right:0;top:15%;height:70%;width:1px;background:linear-gradient(to bottom,transparent,var(--border-dim),transparent)}
+.tbar-num{font-family:'Playfair Display',serif;font-size:clamp(1.9rem,3vw,2.7rem);font-weight:700;color:var(--text-bright);line-height:1;display:block}
+.tbar-label{font-family:'Raleway',sans-serif;font-size:.62rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--text-muted);margin-top:.4rem;display:block}
+
+/* SECTION BASE */
+.stag{font-family:'Raleway',sans-serif;font-size:.63rem;font-weight:800;letter-spacing:.45em;text-transform:uppercase;color:var(--blue-accent);display:inline-block;margin-bottom:1rem}
+.stag::before{content:'— '}
+.stag::after{content:' —'}
+.stit{font-family:'Playfair Display',serif;font-size:clamp(1.85rem,3.4vw,2.95rem);font-weight:700;line-height:1.2}
+.stit.light{color:var(--text-bright)}
+.stit.dark{color:var(--text-dark)}
+.stit.navy{color:var(--navy)}
+.uline{position:relative;display:inline-block}
+.uline::after{content:'';position:absolute;bottom:-10px;left:0;width:0;height:2px;background:linear-gradient(90deg,var(--blue-rich),var(--blue-soft));transition:width 1.3s var(--transition)}
+.uline.animated::after{width:100%}
+.reveal{opacity:0;transform:translateY(44px);transition:opacity .85s var(--transition),transform .85s var(--transition)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.rl{opacity:0;transform:translateX(-55px);transition:opacity .9s var(--transition),transform .9s var(--transition)}
+.rr{opacity:0;transform:translateX(55px);transition:opacity .9s var(--transition),transform .9s var(--transition)}
+.rl.visible,.rr.visible{opacity:1;transform:translateX(0)}
+
+/* ABOUT */
+#about{padding:8rem 5%;background:var(--cream);overflow:hidden;position:relative}
+#about::before{content:'HD';position:absolute;font-family:'Playfair Display',serif;font-size:28vw;font-weight:900;color:rgba(27,58,107,.035);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;line-height:1;letter-spacing:-.05em}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:center;max-width:1200px;margin:0 auto}
+.about-img-stack{position:relative;height:560px}
+.aim{position:absolute;width:75%;height:72%;top:0;left:0;overflow:hidden;box-shadow:0 20px 60px rgba(7,21,38,.22);transform:rotate(-2deg);z-index:2;transition:transform .6s var(--transition)}
+.aim::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(11,29,53,.1),transparent);z-index:1}
+.ais{position:absolute;width:62%;height:58%;bottom:0;right:0;overflow:hidden;box-shadow:0 12px 40px rgba(7,21,38,.18);transform:rotate(1.5deg);z-index:1;border:6px solid var(--cream);transition:transform .6s var(--transition)}
+.about-img-stack:hover .aim{transform:rotate(-4deg) translateY(-8px)}
+.about-img-stack:hover .ais{transform:rotate(3deg) translateY(8px)}
+.aim img,.ais img{width:100%;height:100%;object-fit:cover;transition:transform .6s var(--transition)}
+.about-img-stack:hover img{transform:scale(1.04)}
+.about-accent-box{position:absolute;bottom:20px;left:20px;width:95px;height:95px;background:linear-gradient(135deg,var(--blue-rich),var(--navy-mid));z-index:0}
+.about-badge{position:absolute;top:50%;right:-18px;transform:translateY(-50%);background:linear-gradient(135deg,var(--navy),var(--blue-rich));color:var(--text-bright);padding:1.2rem;text-align:center;z-index:3;box-shadow:0 12px 36px rgba(4,13,26,.3);min-width:105px;border:1px solid var(--border-dim)}
+.badge-num{font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;display:block;line-height:1}
+.badge-text{font-family:'Raleway',sans-serif;font-size:.56rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);display:block;margin-top:.3rem}
+.about-desc{font-family:'Raleway',sans-serif;font-size:.88rem;line-height:1.95;color:var(--text-soft);margin:1.5rem 0 2rem}
+.about-feats{list-style:none;display:flex;flex-direction:column;gap:1.1rem;margin-bottom:2.5rem}
+.about-feat{display:flex;align-items:flex-start;gap:1rem}
+.fdot{width:25px;height:25px;min-width:25px;background:linear-gradient(135deg,var(--blue-rich),var(--blue-mid));display:flex;align-items:center;justify-content:center;margin-top:2px}
+.fdot svg{width:11px;height:11px}
+.ftxt{font-family:'Raleway',sans-serif;font-size:.86rem;color:var(--text-soft);line-height:1.65}
+.ftxt strong{color:var(--navy);display:block;font-weight:700;margin-bottom:.1rem}
+.btn-dark{display:inline-flex;align-items:center;gap:.8rem;font-family:'Raleway',sans-serif;font-size:.68rem;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(--text-bright);background:linear-gradient(135deg,var(--navy),var(--blue-rich));border:1px solid rgba(27,58,107,.28);padding:1rem 2.2rem;cursor:pointer;transition:all .4s;text-decoration:none;overflow:hidden;position:relative;box-shadow:0 6px 24px rgba(4,13,26,.28)}
+.btn-dark::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--blue-rich),var(--blue-mid));transform:scaleX(0);transform-origin:right;transition:transform .4s var(--transition)}
+.btn-dark:hover::before{transform:scaleX(1)}
+.btn-dark span,.btn-dark .arr{position:relative;z-index:1}
+.btn-dark .arr{transform:translateX(-8px);opacity:0;transition:all .4s;font-size:1.1rem}
+.btn-dark:hover .arr{transform:translateX(0);opacity:1}
+.btn-dark:hover{transform:translateY(-2px);box-shadow:0 10px 32px rgba(4,13,26,.38)}
+
+/* WHY */
+#why{padding:7rem 5%;background:var(--deep);overflow:hidden}
+#why .stit{color:var(--text-bright)}
+.why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;max-width:1200px;margin:3rem auto 0}
+.why-card{background:rgba(11,29,53,.65);border:1px solid var(--border-dim);border-top:2px solid var(--blue-rich);padding:2.5rem;position:relative;transition:all .4s var(--transition)}
+.why-card:hover{transform:translateY(-8px);background:rgba(15,37,69,.75);border-color:var(--border-mid);box-shadow:var(--shadow-lift)}
+.why-card:hover .wic{background:var(--blue-rich)}
+.wic{width:54px;height:54px;background:rgba(27,58,107,.22);border:1px solid var(--border-dim);display:flex;align-items:center;justify-content:center;font-size:1.65rem;margin-bottom:1.5rem;transition:all .4s}
+.why-title{font-family:'Playfair Display',serif;font-size:1.08rem;font-weight:600;color:var(--text-bright);margin-bottom:.8rem}
+.why-desc{font-family:'Raleway',sans-serif;font-size:.81rem;color:var(--text-muted);line-height:1.85}
+.why-num{position:absolute;top:1.8rem;right:2rem;font-family:'Playfair Display',serif;font-size:3rem;font-weight:700;color:rgba(91,141,184,.055);line-height:1}
+
+/* ROOMS */
+#rooms{padding:8rem 5%;background:var(--abyss);overflow:hidden}
+.rooms-hdr{text-align:center;margin-bottom:4rem}
+.rooms-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;max-width:1400px;margin:0 auto}
+.room-card{position:relative;height:520px;overflow:hidden;cursor:pointer;transition:all .4s var(--transition)}
+.room-card-bg{position:absolute;inset:0;background-size:cover;background-position:center;transition:transform .7s var(--transition)}
+.room-card:hover .room-card-bg{transform:scale(1.07)}
+.room-card:nth-child(1) .room-card-bg{background-image:url('https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800&q=80')}
+.room-card:nth-child(2) .room-card-bg{background-image:url('https://images.unsplash.com/photo-1591088398332-8a7791972843?w=800&q=80')}
+.room-card:nth-child(3) .room-card-bg{background-image:url('https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800&q=80')}
+.room-card:nth-child(4) .room-card-bg{background-image:url('https://images.unsplash.com/photo-1618773928121-c32242e63f39?w=800&q=80')}
+.room-card-ov{position:absolute;inset:0;background:linear-gradient(to top,rgba(4,13,26,.97) 0%,rgba(7,21,38,.55) 45%,rgba(4,13,26,.15) 100%);transition:all .4s}
+.room-card:hover .room-card-ov{background:linear-gradient(to top,rgba(4,13,26,.99) 0%,rgba(11,29,53,.75) 55%,rgba(4,13,26,.25) 100%)}
+.room-badge{position:absolute;top:1.5rem;right:0;background:linear-gradient(90deg,var(--blue-rich),var(--blue-mid));color:var(--text-bright);font-family:'Raleway',sans-serif;font-size:.57rem;font-weight:800;letter-spacing:.12em;padding:.4rem 1rem;text-transform:uppercase}
+.room-con{position:absolute;bottom:0;left:0;right:0;padding:2rem;transform:translateY(0);transition:transform .4s var(--transition)}
+.room-card:hover .room-con{transform:translateY(-55px)}
+.room-cat{font-family:'Raleway',sans-serif;font-size:.63rem;font-weight:700;color:var(--blue-pale);letter-spacing:.3em;text-transform:uppercase;margin-bottom:.4rem}
+.room-name{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:600;color:var(--text-bright);margin-bottom:.7rem}
+.room-perks{display:flex;gap:.8rem;flex-wrap:wrap;opacity:0;transition:opacity .4s}
+.room-card:hover .room-perks{opacity:1}
+.room-perk{font-family:'Raleway',sans-serif;font-size:.61rem;font-weight:600;color:var(--text-muted);display:flex;align-items:center;gap:.25rem}
+.room-cta{position:absolute;bottom:2rem;left:2rem;right:2rem;background:linear-gradient(90deg,var(--blue-rich),var(--blue-mid));color:var(--text-bright);font-family:'Raleway',sans-serif;font-size:.63rem;font-weight:800;letter-spacing:.2em;text-transform:uppercase;padding:.85rem;text-align:center;transform:translateY(80px);opacity:0;transition:transform .4s var(--transition),opacity .4s;cursor:pointer;border:none;z-index:3}
+.room-cta:hover{background:linear-gradient(90deg,var(--blue-mid),var(--blue-soft))}
+.room-card:hover .room-cta{transform:translateY(0);opacity:1}
+
+/* SERVICES */
+#services{padding:8rem 5%;background:var(--deep);overflow:hidden;position:relative}
+#services::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 65% 45% at 50% 50%,rgba(27,58,107,.07) 0%,transparent 65%);pointer-events:none}
+.svc-hdr{text-align:center;margin-bottom:4rem;position:relative;z-index:1}
+.svc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;max-width:1200px;margin:0 auto;position:relative;z-index:1}
+.svc-card{background:rgba(7,21,38,.55);border:1px solid var(--border-dim);padding:2.2rem;cursor:pointer;position:relative;overflow:hidden;transition:all .45s var(--transition)}
+.svc-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--blue-rich),var(--blue-soft));transform:scaleX(0);transition:transform .4s var(--transition)}
+.svc-card:hover{background:rgba(11,29,53,.75);border-color:var(--border-mid);transform:translateY(-5px);box-shadow:var(--shadow-card)}
+.svc-card:hover::after{transform:scaleX(1)}
+.svc-card:hover .sic{background:rgba(27,58,107,.45);border-color:var(--blue-rich);transform:scale(1.07)}
+.sic{width:50px;height:50px;background:rgba(27,58,107,.18);border:1px solid var(--border-dim);display:flex;align-items:center;justify-content:center;font-size:1.55rem;margin-bottom:1.3rem;transition:all .4s}
+.svc-name{font-family:'Playfair Display',serif;font-size:.98rem;font-weight:600;color:var(--text-bright);margin-bottom:.7rem}
+.svc-desc{font-family:'Raleway',sans-serif;font-size:.74rem;color:var(--text-muted);line-height:1.8}
+.svc-arr{position:absolute;bottom:1.8rem;right:1.8rem;width:26px;height:26px;background:rgba(27,58,107,.18);border:1px solid var(--border-dim);display:flex;align-items:center;justify-content:center;color:var(--text-muted);font-size:.72rem;transition:all .3s;transform:translateX(-4px);opacity:0}
+.svc-card:hover .svc-arr{opacity:1;transform:translateX(0);background:var(--blue-rich);border-color:var(--blue-rich);color:var(--text-bright)}
+
+/* CTA BANNER */
+#cta-banner{padding:6rem 5%;background:var(--pearl);position:relative;overflow:hidden;text-align:center}
+#cta-banner::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(ellipse 50% 45% at 50% 55%,rgba(27,58,107,.055) 0%,transparent 65%);pointer-events:none}
+.cta-inner{max-width:800px;margin:0 auto;position:relative;z-index:1}
+.cta-inner .stit{color:var(--navy);margin-bottom:1.2rem}
+.cta-sub{font-family:'Cormorant Garamond',serif;font-size:1.12rem;font-style:italic;color:var(--text-soft);margin-bottom:2.5rem}
+.cta-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+.btn-cta-f{font-family:'Raleway',sans-serif;font-size:.74rem;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(--text-bright);background:linear-gradient(135deg,var(--navy),var(--blue-rich));border:none;padding:1.1rem 3.2rem;cursor:pointer;transition:all .4s;text-decoration:none;display:inline-block;box-shadow:0 8px 28px rgba(4,13,26,.22)}
+.btn-cta-f:hover{transform:translateY(-3px);box-shadow:0 14px 40px rgba(4,13,26,.32)}
+.btn-cta-o{font-family:'Raleway',sans-serif;font-size:.74rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--navy);background:transparent;border:1.5px solid var(--blue-rich);padding:1.1rem 2.8rem;cursor:pointer;transition:all .4s;text-decoration:none;display:inline-block}
+.btn-cta-o:hover{background:var(--navy);color:var(--text-bright);transform:translateY(-3px)}
+.cta-note{font-family:'Raleway',sans-serif;font-size:.76rem;font-weight:600;color:var(--text-soft);margin-top:1.8rem}
+.cta-note a{color:var(--blue-rich);font-weight:800;text-decoration:none}
+.cta-note a:hover{text-decoration:underline}
+
+/* GALLERY */
+#gallery{padding:8rem 5%;background:var(--cream);overflow:hidden}
+.gal-hdr{text-align:center;margin-bottom:3rem}
+.gal-mosaic{display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(2,265px);gap:5px;max-width:1200px;margin:0 auto}
+.gi:nth-child(1){grid-column:1/3;grid-row:1/2}
+.gi:nth-child(5){grid-column:3/5;grid-row:2/3}
+.gi{overflow:hidden;position:relative;cursor:pointer}
+.gi img{width:100%;height:100%;object-fit:cover;transition:transform .7s var(--transition)}
+.gi:hover img{transform:scale(1.07)}
+.g-ov{position:absolute;inset:0;background:linear-gradient(135deg,rgba(4,13,26,.8),rgba(27,58,107,.65));opacity:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:.5rem;transition:opacity .4s}
+.gi:hover .g-ov{opacity:1}
+.g-ic{font-size:1.5rem;transform:scale(.5);transition:transform .4s var(--transition);color:var(--text-bright);font-weight:300;font-size:2rem}
+.gi:hover .g-ic{transform:scale(1)}
+.g-cap{font-family:'Raleway',sans-serif;font-size:.62rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:rgba(197,213,224,.82);transform:translateY(8px);opacity:0;transition:all .4s .05s}
+.gi:hover .g-cap{transform:translateY(0);opacity:1}
+#lightbox{position:fixed;inset:0;background:rgba(4,13,26,.97);z-index:9000;display:none;align-items:center;justify-content:center}
+#lightbox.open{display:flex}
+.lb-wrap{max-width:90vw;max-height:85vh;position:relative}
+#lb-img{max-width:90vw;max-height:85vh;object-fit:contain;border:1px solid var(--border-dim)}
+.lb-close{position:absolute;top:-46px;right:0;background:none;border:1px solid var(--border-dim);color:var(--text-muted);width:36px;height:36px;font-size:.95rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .3s}
+.lb-close:hover{background:var(--blue-rich);border-color:var(--blue-rich);color:var(--text-bright)}
+.lb-nav{position:absolute;top:50%;transform:translateY(-50%);background:rgba(7,21,38,.55);border:1px solid var(--border-dim);color:var(--text-muted);width:48px;height:48px;font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .3s}
+.lb-nav:hover{background:var(--blue-rich);border-color:var(--blue-rich);color:var(--text-bright)}
+#lb-prev{left:2rem}
+#lb-next{right:2rem}
+
+/* TESTIMONIALS */
+#testimonials{padding:8rem 5%;background:var(--pearl);overflow:hidden}
+.testi-hdr{text-align:center;margin-bottom:4rem}
+.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;max-width:1200px;margin:0 auto}
+.tcard{background:var(--white);padding:2.3rem;position:relative;box-shadow:0 2px 22px rgba(7,21,38,.07);border-bottom:2px solid transparent;transition:all .4s}
+.tcard:hover{transform:translateY(-5px);box-shadow:0 16px 45px rgba(7,21,38,.13);border-bottom-color:var(--blue-rich)}
+.tq{font-family:'Playfair Display',serif;font-size:3.6rem;color:var(--blue-rich);line-height:.5;margin-bottom:1.2rem;display:block}
+.ttxt{font-family:'Cormorant Garamond',serif;font-size:1.03rem;font-style:italic;color:var(--text-mid);line-height:1.9;margin-bottom:1.5rem}
+.tstars{color:var(--blue-rich);font-size:.82rem;letter-spacing:.15em;margin-bottom:1.2rem}
+.tauthor{display:flex;align-items:center;gap:1rem;border-top:1px solid var(--fog);padding-top:1.2rem;margin-top:.5rem}
+.tavatar{width:40px;height:40px;border-radius:50%;object-fit:cover;border:2px solid var(--blue-rich)}
+.tname{font-family:'Raleway',sans-serif;font-size:.78rem;font-weight:700;color:var(--navy)}
+.tstay{font-family:'Raleway',sans-serif;font-size:.63rem;color:var(--text-soft);margin-top:.15rem}
+.tbadge{position:absolute;top:1.8rem;right:1.8rem;width:25px;height:25px;background:var(--pearl);border:1px solid var(--fog);display:flex;align-items:center;justify-content:center;font-size:.6rem;color:var(--blue-rich);font-weight:700}
+
+/* BOOKING */
+#booking{padding:8rem 5%;background:var(--abyss);position:relative;overflow:hidden}
+#booking::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 50% 50%,rgba(27,58,107,.07) 0%,transparent 65%);pointer-events:none}
+.bk-card{position:relative;z-index:2;background:var(--cream);max-width:900px;margin:0 auto;padding:4rem;box-shadow:0 30px 80px rgba(4,13,26,.5)}
+.bk-hdr{text-align:center;margin-bottom:3rem}
+.bk-hdr .stit{color:var(--navy)}
+.bk-form{display:grid;grid-template-columns:repeat(2,1fr);gap:1.8rem}
+.bf{display:flex;flex-direction:column;gap:.5rem}
+.bf label{font-family:'Raleway',sans-serif;font-size:.6rem;font-weight:800;letter-spacing:.25em;text-transform:uppercase;color:var(--blue-rich)}
+.bf input,.bf select{background:var(--white);border:1px solid var(--fog);color:var(--text-dark);font-family:'Raleway',sans-serif;font-size:.87rem;padding:.85rem 1rem;outline:none;transition:all .3s;-webkit-appearance:none;border-radius:0}
+.bf input:focus,.bf select:focus{border-color:var(--blue-rich);box-shadow:0 0 0 3px rgba(27,58,107,.07)}
+.bf input::placeholder{color:rgba(61,89,120,.32)}
+.bk-sub{grid-column:span 2;display:flex;justify-content:center;margin-top:1rem}
+.btn-book{font-family:'Raleway',sans-serif;font-size:.72rem;font-weight:800;letter-spacing:.28em;text-transform:uppercase;color:var(--text-bright);background:linear-gradient(90deg,var(--navy),var(--blue-rich));border:none;padding:1.2rem 5rem;cursor:pointer;position:relative;overflow:hidden;transition:all .4s;box-shadow:0 6px 28px rgba(4,13,26,.28)}
+.btn-book::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.1),transparent);animation:shine 3s infinite}
+@keyframes shine{to{left:100%}}
+.btn-book:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(4,13,26,.42)}
+.bk-trust{display:flex;justify-content:center;gap:2rem;margin-top:1.8rem;flex-wrap:wrap}
+.bti{font-family:'Raleway',sans-serif;font-size:.66rem;font-weight:600;color:var(--text-soft);display:flex;align-items:center;gap:.4rem}
+
+/* CONTACT */
+#contact{padding:8rem 5%;background:var(--navy);overflow:hidden}
+.ct-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;max-width:1200px;margin:0 auto;align-items:start}
+.ct-map{height:480px;overflow:hidden;position:relative}
+.ct-map iframe{width:100%;height:100%;border:none;filter:saturate(.18) brightness(.7) hue-rotate(180deg);transition:filter .5s}
+.ct-map:hover iframe{filter:saturate(.55) brightness(.88) hue-rotate(180deg)}
+.ct-map-ov{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(to top,rgba(7,21,38,.18),transparent);height:30%;pointer-events:none}
+.ct-intro{font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-style:italic;color:var(--text-muted);margin:.5rem 0 2.5rem}
+.ct-form{display:flex;flex-direction:column;gap:1.4rem}
+.fg{position:relative}
+.fg input,.fg textarea{width:100%;background:transparent;border:none;border-bottom:1px solid var(--border-dim);color:var(--text-bright);font-family:'Raleway',sans-serif;font-size:.87rem;padding:.9rem 0;outline:none;resize:none;transition:border-color .4s}
+.fg input::placeholder,.fg textarea::placeholder{color:rgba(130,153,174,.4)}
+.fg input:focus,.fg textarea:focus{border-bottom-color:var(--blue-soft)}
+.fline{position:absolute;bottom:0;left:0;width:0;height:1px;background:linear-gradient(90deg,var(--blue-rich),var(--blue-soft));transition:width .5s var(--transition)}
+.fg input:focus~.fline,.fg textarea:focus~.fline{width:100%}
+.ct-info{margin-top:2.5rem;display:flex;flex-direction:column;gap:.8rem;border-top:1px solid var(--border-dim);padding-top:2rem}
+.ci-card{display:flex;align-items:center;gap:1.2rem;padding:.9rem 1rem;background:rgba(11,29,53,.45);border:1px solid var(--border-dim);transition:all .3s}
+.ci-card:hover{background:rgba(15,37,69,.65);border-color:var(--border-mid);transform:translateX(4px)}
+.ci-icon{width:36px;height:36px;min-width:36px;background:linear-gradient(135deg,var(--blue-rich),var(--blue-mid));color:var(--text-bright);display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0}
+.ci-label{font-family:'Raleway',sans-serif;font-size:.56rem;font-weight:800;letter-spacing:.22em;text-transform:uppercase;color:var(--blue-accent);display:block;margin-bottom:.18rem}
+.ci-val{font-family:'Raleway',sans-serif;font-size:.81rem;font-weight:600;color:var(--text-light)}
+.soc-row{display:flex;gap:.8rem;margin-top:1.5rem}
+.soc{width:36px;height:36px;background:rgba(27,58,107,.18);border:1px solid var(--border-dim);color:var(--text-muted);display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:.85rem;font-weight:700;transition:all .3s}
+.soc:hover{background:var(--blue-rich);border-color:var(--blue-rich);color:var(--text-bright);transform:translateY(-3px)}
+
+/* FOOTER */
+footer{background:var(--abyss);padding:5rem 5% 0;position:relative;overflow:hidden}
+footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--blue-rich),var(--blue-soft),var(--blue-rich),transparent)}
+footer::after{content:'';position:absolute;bottom:0;right:0;width:320px;height:320px;background:radial-gradient(circle,rgba(27,58,107,.045) 0%,transparent 70%);pointer-events:none}
+.ft-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1.5fr;gap:4rem;max-width:1200px;margin:0 auto;padding-bottom:4rem;border-bottom:1px solid var(--border-dim);position:relative;z-index:1}
+.ft-brand-row{display:flex;align-items:center;gap:.8rem;margin-bottom:1.5rem}
+.ft-logo{width:44px;height:44px;object-fit:contain;filter:drop-shadow(0 0 10px rgba(91,141,184,.3))}
+.ft-brand-name{font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--text-bright)}
+.ft-brand-sub{font-family:'Raleway',sans-serif;font-size:.58rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--text-muted);display:block}
+.ft-desc{font-family:'Raleway',sans-serif;font-size:.76rem;line-height:1.9;color:var(--text-muted);margin-bottom:1.8rem}
+.ft-col-head{font-family:'Raleway',sans-serif;font-size:.62rem;font-weight:800;letter-spacing:.28em;text-transform:uppercase;color:var(--text-bright);margin-bottom:1.5rem;position:relative;padding-bottom:.8rem}
+.ft-col-head::after{content:'';position:absolute;bottom:0;left:0;width:22px;height:1px;background:var(--blue-rich)}
+.ft-links{list-style:none;display:flex;flex-direction:column;gap:.7rem}
+.ft-links a{font-family:'Raleway',sans-serif;font-size:.76rem;color:var(--text-muted);text-decoration:none;transition:all .3s;display:flex;align-items:center;gap:.5rem}
+.ft-links a::before{content:'›';color:var(--blue-accent);font-size:.95rem;transition:transform .3s}
+.ft-links a:hover{color:var(--text-bright);padding-left:4px}
+.ft-links a:hover::before{transform:translateX(3px)}
+.nl-wrap{margin-top:.5rem}
+.nl-inp{width:100%;background:rgba(11,29,53,.5);border:1px solid var(--border-dim);color:var(--text-bright);font-family:'Raleway',sans-serif;font-size:.76rem;padding:.9rem 1rem;outline:none;transition:border-color .3s;margin-bottom:.8rem}
+.nl-inp:focus{border-color:var(--blue-rich)}
+.nl-inp::placeholder{color:rgba(130,153,174,.28)}
+.nl-btn{width:100%;background:linear-gradient(90deg,var(--blue-rich),var(--blue-mid));color:var(--text-bright);font-family:'Raleway',sans-serif;font-size:.65rem;font-weight:800;letter-spacing:.2em;text-transform:uppercase;padding:.9rem;border:none;cursor:pointer;transition:all .3s}
+.nl-btn:hover{opacity:.88;transform:translateY(-1px)}
+.ft-bottom{max-width:1200px;margin:0 auto;padding:1.5rem 0;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.8rem;position:relative;z-index:1}
+.ft-copy{font-family:'Raleway',sans-serif;font-size:.65rem;color:rgba(130,153,174,.35)}
+.back-top{background:rgba(11,29,53,.45);border:1px solid var(--border-dim);color:var(--text-muted);font-family:'Raleway',sans-serif;font-size:.6rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;padding:.52rem 1.1rem;cursor:pointer;display:flex;align-items:center;gap:.5rem;transition:all .3s}
+.back-top:hover{background:var(--blue-rich);border-color:var(--blue-rich);color:var(--text-bright)}
+.watermark{display:block;text-align:center;padding:.6rem;font-family:'Raleway',sans-serif;font-size:.46rem;font-weight:600;letter-spacing:.2em;color:rgba(130,153,174,.08);text-decoration:none;transition:color .3s;max-width:1200px;margin:0 auto;position:relative;z-index:1}
+.watermark:hover{color:rgba(130,153,174,.25)}
+
+/* RESPONSIVE */
+@media(max-width:1200px){
+  .rooms-grid{grid-template-columns:repeat(2,1fr)}
+  .svc-grid{grid-template-columns:repeat(2,1fr)}
+  .ft-grid{grid-template-columns:1fr 1fr;gap:3rem}
+  .gal-mosaic{grid-template-columns:repeat(2,1fr);grid-template-rows:auto}
+  .gi:nth-child(1),.gi:nth-child(5){grid-column:auto;grid-row:auto}
+}
+@media(max-width:768px){
+  .nav-links,.nav-cta{display:none}
+  .hamburger{display:flex}
+  .about-grid,.ct-grid{grid-template-columns:1fr;gap:3rem}
+  .about-img-stack{height:380px}
+  .about-badge{right:-10px}
+  .rooms-grid,.svc-grid{grid-template-columns:1fr 1fr}
+  .why-grid{grid-template-columns:1fr}
+  .testi-grid{grid-template-columns:1fr}
+  .bk-form{grid-template-columns:1fr}
+  .bk-sub{grid-column:span 1}
+  .ft-grid{grid-template-columns:1fr;gap:2.5rem}
+  .ft-bottom{flex-direction:column;text-align:center}
+  .tbar-grid{grid-template-columns:repeat(2,1fr)}
+  .tbar-item:nth-child(2)::after,.tbar-item:nth-child(4)::after{display:none}
+  .gal-mosaic{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:auto}
+  .hero-content-inner{padding:2rem 1.5rem}
+}
+@media(max-width:480px){
+  .rooms-grid,.svc-grid{grid-template-columns:1fr}
+  .gal-mosaic{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<div id="scroll-progress"></div>
+
+<!-- LOADER -->
+<div id="loader">
+  <div style="position:relative;display:flex;align-items:center;justify-content:center">
+    <div class="loader-rings"><div class="loader-ring"></div><div class="loader-ring"></div><div class="loader-ring"></div></div>
+    <div class="loader-logo-wrap">
+      <img id="loader-logo-img" src="https://i.postimg.cc/Vv04KXS6/480291439-122108598494756459-6087197609136198998-n-removebg-preview.png" alt="Hotel Dream Palace">
+    </div>
+  </div>
+  <div class="loader-title">DREAM PALACE</div>
+  <div class="loader-subtitle">Bhairahawa · Nepal · Est. 1996</div>
+  <div class="loader-bar"><div class="loader-bar-fill"></div></div>
+</div>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <a href="#hero" class="nav-logo">
+    <img class="nav-logo-img" id="nav-logo-img" src="https://i.postimg.cc/Vv04KXS6/480291439-122108598494756459-6087197609136198998-n-removebg-preview.png" alt="Hotel Dream Palace">
+    <div><span class="nav-logo-text">Dream Palace</span><span class="nav-logo-sub">Bhairahawa · Nepal</span></div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#hero">Home</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#rooms">Rooms</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <button class="nav-cta"><span>Book Now</span></button>
+  <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+</nav>
+<div id="nav-drawer">
+  <button class="drawer-close" id="drawer-close">✕</button>
+  <ul class="drawer-links">
+    <li><a href="#hero">Home</a></li><li><a href="#about">About</a></li>
+    <li><a href="#rooms">Rooms</a></li><li><a href="#services">Services</a></li>
+    <li><a href="#gallery">Gallery</a></li><li><a href="#contact">Contact</a></li>
+  </ul>
+</div>
+<div class="overlay" id="overlay"></div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-slides">
+    <div class="hero-slide active"></div><div class="hero-slide"></div>
+    <div class="hero-slide"></div><div class="hero-slide"></div>
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="hero-grid-lines"></div>
+  <canvas id="hero-canvas"></canvas>
+  <div class="hero-content">
+    <div class="hero-content-inner" id="hero-tilt">
+      <span class="hero-eyebrow">Est. 1996 · Siddharthanagar, Bhairahawa</span>
+      <h1 class="hero-title">
+        <span class="word">Where</span> <span class="word"> </span>
+        <span class="word hl">Luxury</span>
+        <span class="word"> Meets</span>
+        <span class="word"> Dreams</span>
+      </h1>
+      <p class="hero-sub">Nepal's Premier Luxury Hotel — Gateway to Lumbini's Sacred Heritage</p>
+      <div class="hero-btns">
+        <a href="#booking" class="btn-primary"><span>Reserve Your Stay</span></a>
+        <a href="#rooms" class="btn-secondary">Explore Rooms</a>
+      </div>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <span class="scroll-text">Discover More</span>
+    <span class="scroll-arr"><svg width="15" height="9" viewBox="0 0 15 9" fill="none"><path d="M1 1L7.5 8L14 1" stroke="#8AAECE" stroke-width="1.5"/></svg></span>
+  </div>
+  <div class="hero-dots" id="slide-indicators">
+    <div class="slide-dot active"></div><div class="slide-dot"></div>
+    <div class="slide-dot"></div><div class="slide-dot"></div>
+  </div>
+</section>
+
+<!-- TRUST BAR -->
+<section id="trustbar">
+  <div class="tbar-grid">
+    <div class="tbar-item reveal"><span class="tbar-num" data-target="120" data-suffix="+">0</span><span class="tbar-label">Luxury Rooms</span></div>
+    <div class="tbar-item reveal" style="transition-delay:.15s"><span class="tbar-num" data-target="28" data-suffix="">0</span><span class="tbar-label">Years Excellence</span></div>
+    <div class="tbar-item reveal" style="transition-delay:.3s"><span class="tbar-num" data-target="15000" data-suffix="+">0</span><span class="tbar-label">Happy Guests</span></div>
+    <div class="tbar-item reveal" style="transition-delay:.45s"><span class="tbar-num" data-target="4.9" data-suffix="★" data-decimal="true">0</span><span class="tbar-label">Guest Rating</span></div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-grid">
+    <div class="about-img-stack rl">
+      <div class="about-accent-box"></div>
+      <div class="aim"><img src="https://images.unsplash.com/photo-1578683010236-d716f9a3f461?w=800&q=80" alt="Hotel" loading="lazy"></div>
+      <div class="ais"><img src="https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=800&q=80" alt="Interior" loading="lazy"></div>
+      <div class="about-badge"><span class="badge-num">28</span><span class="badge-text">Years of<br>Excellence</span></div>
+    </div>
+    <div class="rr">
+      <span class="stag">Our Heritage</span>
+      <h2 class="stit dark uline">Nepal's Most<br><em>Beloved Hotel</em></h2>
+      <p class="about-desc">Since 1996, Hotel Dream Palace has been the jewel of Bhairahawa — where world-class luxury harmonizes with authentic Nepali warmth. Located at Siddharthanagar-8, Ravi Path, we are the premier gateway for pilgrims visiting Lumbini, the sacred birthplace of Lord Buddha, and for travelers seeking unmatched comfort in southern Nepal.</p>
+      <ul class="about-feats">
+        <li class="about-feat"><div class="fdot"><svg viewBox="0 0 13 13" fill="none"><polyline points="1,7 4,11 12,2" stroke="#fff" stroke-width="2"/></svg></div><div class="ftxt"><strong>Prime Lumbini Gateway Location</strong>Just 20 minutes from Lumbini — the sacred birthplace of Lord Buddha. Perfect for pilgrims &amp; cultural travelers.</div></li>
+        <li class="about-feat"><div class="fdot"><svg viewBox="0 0 13 13" fill="none"><polyline points="1,7 4,11 12,2" stroke="#fff" stroke-width="2"/></svg></div><div class="ftxt"><strong>World-Class Facilities</strong>Air-conditioned rooms, multi-cuisine restaurant, conference halls, banquet venue, and 24/7 concierge.</div></li>
+        <li class="about-feat"><div class="fdot"><svg viewBox="0 0 13 13" fill="none"><polyline points="1,7 4,11 12,2" stroke="#fff" stroke-width="2"/></svg></div><div class="ftxt"><strong>Authentic Nepali Hospitality</strong>Personalized, genuine, and unforgettable service rooted in Nepali warmth and tradition.</div></li>
+      </ul>
+      <a href="#contact" class="btn-dark"><span>Contact Us Today</span><span class="arr">→</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- WHY -->
+<section id="why">
+  <div style="text-align:center;margin-bottom:1rem">
+    <span class="stag">Why Choose Us</span>
+    <h2 class="stit light reveal">The Dream Palace Difference</h2>
+  </div>
+  <div class="why-grid">
+    <div class="why-card reveal" style="transition-delay:.05s"><div class="why-num">01</div><div class="wic">🏛️</div><h3 class="why-title">Prime Location</h3><p class="why-desc">Centrally located in Bhairahawa city, minutes from Lumbini, Bhairahawa Airport, and major business districts.</p></div>
+    <div class="why-card reveal" style="transition-delay:.1s"><div class="why-num">02</div><div class="wic">🍽️</div><h3 class="why-title">Multi-Cuisine Restaurant</h3><p class="why-desc">Authentic Nepali, Indian, Chinese &amp; Continental cuisine. In-room dining available 24 hours every day.</p></div>
+    <div class="why-card reveal" style="transition-delay:.15s"><div class="why-num">03</div><div class="wic">🎪</div><h3 class="why-title">Event &amp; Conference</h3><p class="why-desc">Elegant banquet halls and conference rooms for weddings, corporate events, and cultural programs.</p></div>
+    <div class="why-card reveal" style="transition-delay:.2s"><div class="why-num">04</div><div class="wic">🚗</div><h3 class="why-title">Free Airport Pickup</h3><p class="why-desc">Complimentary transfer from Bhairahawa Airport. We arrange Lumbini tours and city transport.</p></div>
+    <div class="why-card reveal" style="transition-delay:.25s"><div class="why-num">05</div><div class="wic">📶</div><h3 class="why-title">High-Speed WiFi</h3><p class="why-desc">Complimentary high-speed internet throughout the property for business and leisure guests.</p></div>
+    <div class="why-card reveal" style="transition-delay:.3s"><div class="why-num">06</div><div class="wic">🛡️</div><h3 class="why-title">Safe &amp; Secure</h3><p class="why-desc">24/7 security, CCTV surveillance, and professional front desk. Your safety is our highest priority.</p></div>
+  </div>
+</section>
+
+<!-- ROOMS -->
+<section id="rooms">
+  <div class="rooms-hdr">
+    <span class="stag">Accommodations</span>
+    <h2 class="stit light reveal"><span class="uline">Curated Sanctuaries</span></h2>
+    <p style="font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--text-muted);font-size:1.02rem;margin-top:1.5rem">Each room crafted for comfort, elegance, and memorable stays</p>
+  </div>
+  <div class="rooms-grid">
+    <div class="room-card"><div class="room-card-bg"></div><div class="room-card-ov"></div><div class="room-badge">From NPR 4,500/Night</div><div class="room-con"><span class="room-cat">Classic</span><h3 class="room-name">Deluxe Room</h3><div class="room-perks"><span class="room-perk">🛏 King Bed</span><span class="room-perk">📺 Smart TV</span><span class="room-perk">❄️ AC</span></div></div><button class="room-cta" onclick="document.getElementById('booking').scrollIntoView({behavior:'smooth'})">Reserve Now</button></div>
+    <div class="room-card"><div class="room-card-bg"></div><div class="room-card-ov"></div><div class="room-badge">From NPR 7,500/Night</div><div class="room-con"><span class="room-cat">Signature</span><h3 class="room-name">Premier Suite</h3><div class="room-perks"><span class="room-perk">🛏 Super King</span><span class="room-perk">🌿 Garden View</span><span class="room-perk">🍾 Butler</span></div></div><button class="room-cta" onclick="document.getElementById('booking').scrollIntoView({behavior:'smooth'})">Reserve Now</button></div>
+    <div class="room-card"><div class="room-card-bg"></div><div class="room-card-ov"></div><div class="room-badge">From NPR 12,000/Night</div><div class="room-con"><span class="room-cat">Prestige</span><h3 class="room-name">Royal Suite</h3><div class="room-perks"><span class="room-perk">🛏 Private Wing</span><span class="room-perk">🛁 Jacuzzi</span><span class="room-perk">🍽 Dining</span></div></div><button class="room-cta" onclick="document.getElementById('booking').scrollIntoView({behavior:'smooth'})">Reserve Now</button></div>
+    <div class="room-card"><div class="room-card-bg"></div><div class="room-card-ov"></div><div class="room-badge">From NPR 20,000/Night</div><div class="room-con"><span class="room-cat">Ultimate</span><h3 class="room-name">Presidential Suite</h3><div class="room-perks"><span class="room-perk">🏛 Multi-Room</span><span class="room-perk">👑 VIP Service</span><span class="room-perk">🎯 All-Inclusive</span></div></div><button class="room-cta" onclick="document.getElementById('booking').scrollIntoView({behavior:'smooth'})">Reserve Now</button></div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="svc-hdr">
+    <span class="stag" style="color:var(--blue-pale)">What We Offer</span>
+    <h2 class="stit light">Everything You Need,<br>Under One Roof</h2>
+  </div>
+  <div class="svc-grid">
+    <div class="svc-card reveal" style="transition-delay:.05s"><div class="sic">🛏</div><h3 class="svc-name">Premium Rooms</h3><p class="svc-desc">Premium mattresses, fine linens, blackout curtains, and personalised pillow menus for perfect rest.</p><div class="svc-arr">→</div></div>
+    <div class="svc-card reveal" style="transition-delay:.1s"><div class="sic">🍽</div><h3 class="svc-name">Multi-Cuisine Dining</h3><p class="svc-desc">Nepali, Indian, Chinese, Continental. Rooftop dining and 24/7 in-room service available daily.</p><div class="svc-arr">→</div></div>
+    <div class="svc-card reveal" style="transition-delay:.15s"><div class="sic">🎪</div><h3 class="svc-name">Banquet &amp; Events</h3><p class="svc-desc">Elegant halls for weddings, receptions, and celebrations with full planning and catering support.</p><div class="svc-arr">→</div></div>
+    <div class="svc-card reveal" style="transition-delay:.2s"><div class="sic">💼</div><h3 class="svc-name">Business Center</h3><p class="svc-desc">Conference rooms, high-speed WiFi, projectors, and dedicated business support services.</p><div class="svc-arr">→</div></div>
+    <div class="svc-card reveal" style="transition-delay:.25s"><div class="sic">🚗</div><h3 class="svc-name">Airport &amp; Tours</h3><p class="svc-desc">Free airport pickup, Lumbini pilgrimage tours, city sightseeing, and travel arrangements.</p><div class="svc-arr">→</div></div>
+    <div class="svc-card reveal" style="transition-delay:.3s"><div class="sic">🧖</div><h3 class="svc-name">Wellness &amp; Spa</h3><p class="svc-desc">Ayurvedic treatments, yoga sessions, meditation programs, and full-body relaxation therapies.</p><div class="svc-arr">→</div></div>
+    <div class="svc-card reveal" style="transition-delay:.35s"><div class="sic">🅿️</div><h3 class="svc-name">Free Parking</h3><p class="svc-desc">Secured parking for cars, motorcycles, and buses. 24/7 security and CCTV surveillance.</p><div class="svc-arr">→</div></div>
+    <div class="svc-card reveal" style="transition-delay:.4s"><div class="sic">👑</div><h3 class="svc-name">24/7 Concierge</h3><p class="svc-desc">Round-the-clock team for travel booking, visa assistance, reservations, and any request.</p><div class="svc-arr">→</div></div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta-banner">
+  <div class="cta-inner">
+    <span class="stag">Limited Time Offer</span>
+    <h2 class="stit navy reveal">Book Direct &amp; Save Up to 20%</h2>
+    <p class="cta-sub">Exclusive rates, complimentary breakfast, and free airport pickup on all direct bookings.</p>
+    <div class="cta-btns">
+      <a href="#booking" class="btn-cta-f">Book Now — Best Rate Guaranteed</a>
+      <a href="mailto:hoteldreampalacebhw@gmail.com" class="btn-cta-o">Email Us</a>
+    </div>
+    <p class="cta-note">Contact us: <a href="mailto:hoteldreampalacebhw@gmail.com">hoteldreampalacebhw@gmail.com</a></p>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="gal-hdr">
+    <span class="stag">Visual Story</span>
+    <h2 class="stit dark reveal"><span class="uline">Glimpses of Dream Palace</span></h2>
+  </div>
+  <div class="gal-mosaic" id="gallery-grid">
+    <div class="gi reveal"><img src="https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=800&q=80" alt="Lobby" loading="lazy"><div class="g-ov"><span class="g-ic">+</span><span class="g-cap">Grand Lobby</span></div></div>
+    <div class="gi reveal" style="transition-delay:.05s"><img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=800&q=80" alt="Pool" loading="lazy"><div class="g-ov"><span class="g-ic">+</span><span class="g-cap">Pool Area</span></div></div>
+    <div class="gi reveal" style="transition-delay:.1s"><img src="https://images.unsplash.com/photo-1540541338287-41700207dee6?w=800&q=80" alt="Spa" loading="lazy"><div class="g-ov"><span class="g-ic">+</span><span class="g-cap">Wellness Spa</span></div></div>
+    <div class="gi reveal" style="transition-delay:.15s"><img src="https://images.unsplash.com/photo-1514190051997-0f6f39ca5cde?w=800&q=80" alt="Dining" loading="lazy"><div class="g-ov"><span class="g-ic">+</span><span class="g-cap">Fine Dining</span></div></div>
+    <div class="gi reveal" style="transition-delay:.2s"><img src="https://images.unsplash.com/photo-1578683010236-d716f9a3f461?w=800&q=80" alt="Suite" loading="lazy"><div class="g-ov"><span class="g-ic">+</span><span class="g-cap">Royal Suite</span></div></div>
+    <div class="gi reveal" style="transition-delay:.25s"><img src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=800&q=80" alt="Resort" loading="lazy"><div class="g-ov"><span class="g-ic">+</span><span class="g-cap">Exterior</span></div></div>
+    <div class="gi reveal" style="transition-delay:.3s"><img src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=800&q=80" alt="Garden" loading="lazy"><div class="g-ov"><span class="g-ic">+</span><span class="g-cap">Garden</span></div></div>
+    <div class="gi reveal" style="transition-delay:.35s"><img src="https://images.unsplash.com/photo-1455587734955-081b22074882?w=800&q=80" alt="Bar" loading="lazy"><div class="g-ov"><span class="g-ic">+</span><span class="g-cap">Lounge Bar</span></div></div>
+  </div>
+</section>
+<div id="lightbox">
+  <button class="lb-nav" id="lb-prev">←</button>
+  <div class="lb-wrap"><img id="lb-img" src="" alt=""><button class="lb-close" id="lb-close">✕</button></div>
+  <button class="lb-nav" id="lb-next">→</button>
+</div>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="testi-hdr">
+    <span class="stag">Guest Reviews</span>
+    <h2 class="stit dark reveal">What Our Guests Say</h2>
+    <p style="font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--text-soft);font-size:1rem;margin-top:1rem">Real reviews — verified &amp; trusted</p>
+  </div>
+  <div class="testi-grid">
+    <div class="tcard reveal"><div class="tbadge">✓</div><span class="tq">"</span><p class="ttxt">The best hotel in Bhairahawa by far! Staff was incredibly warm, rooms spotless, food delicious, and the Lumbini tour was perfectly organized. Will definitely return!</p><div class="tstars">★★★★★</div><div class="tauthor"><img class="tavatar" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=80" alt="Rajesh"><div><div class="tname">Rajesh Kumar Sharma</div><div class="tstay">Royal Suite · March 2025 · India</div></div></div></div>
+    <div class="tcard reveal" style="transition-delay:.1s"><div class="tbadge">✓</div><span class="tq">"</span><p class="ttxt">We held our company conference here and it was exceptional. Conference facilities were world-class, catering outstanding. Highly recommended for corporate events!</p><div class="tstars">★★★★★</div><div class="tauthor"><img class="tavatar" src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=100&q=80" alt="Priya"><div><div class="tname">Priya Agarwal</div><div class="tstay">Conference · Jan 2025 · Delhi</div></div></div></div>
+    <div class="tcard reveal" style="transition-delay:.2s"><div class="tbadge">✓</div><span class="tq">"</span><p class="ttxt">As pilgrims visiting Lumbini, Dream Palace was a blessing. Free airport pickup, comfortable rooms, and guided Lumbini tour made our spiritual journey so peaceful.</p><div class="tstars">★★★★★</div><div class="tauthor"><img class="tavatar" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&q=80" alt="Thich"><div><div class="tname">Thich Van Minh</div><div class="tstay">Deluxe Room · Nov 2024 · Vietnam</div></div></div></div>
+  </div>
+</section>
+
+<!-- BOOKING -->
+<section id="booking">
+  <div class="bk-card reveal">
+    <div class="bk-hdr">
+      <span class="stag">Reserve Your Stay</span>
+      <h2 class="stit dark">Begin Your Journey — Book Now</h2>
+      <p style="font-family:'Raleway',sans-serif;font-size:.81rem;color:var(--text-soft);margin-top:.8rem">🎁 <strong>Book Direct</strong> — Best Rates + Free Breakfast + Free Airport Pickup</p>
+    </div>
+    <div class="bk-form">
+      <div class="bf"><label>Check-In Date</label><input type="date" id="check-in"></div>
+      <div class="bf"><label>Check-Out Date</label><input type="date" id="check-out"></div>
+      <div class="bf"><label>Guests</label><select id="guests"><option value="" disabled selected>Select guests</option><option>1 Guest</option><option>2 Guests</option><option>3 Guests</option><option>4 Guests</option><option>5+ Guests</option></select></div>
+      <div class="bf"><label>Room Type</label><select id="room-type"><option value="" disabled selected>Select room type</option><option>Deluxe Room — From NPR 4,500</option><option>Premier Suite — From NPR 7,500</option><option>Royal Suite — From NPR 12,000</option><option>Presidential Suite — From NPR 20,000</option></select></div>
+      <div class="bk-sub"><button class="btn-book">Check Availability &amp; Book Now</button></div>
+    </div>
+    <div class="bk-trust">
+      <span class="bti">✅ Best Rate Guaranteed</span>
+      <span class="bti">🎁 Free Breakfast</span>
+      <span class="bti">🚗 Free Airport Pickup</span>
+      <span class="bti">❌ Free Cancellation</span>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div style="text-align:center;margin-bottom:3rem">
+    <span class="stag">Get In Touch</span>
+    <h2 class="stit light reveal">We're Here For You — Always</h2>
+  </div>
+  <div class="ct-grid">
+    <div class="ct-map rl">
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3533.2!2d83.4478!3d27.5061!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3996864f8e09bfad%3A0x2b2bf73b7aacbfbc!2sBhairahawa%2C%20Siddharthanagar!5e0!3m2!1sen!2snp!4v1" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Hotel Dream Palace Location"></iframe>
+      <div class="ct-map-ov"></div>
+    </div>
+    <div class="rr">
+      <span class="stag">Send a Message</span>
+      <h3 class="stit light" style="font-size:1.7rem;margin-bottom:.5rem">We'd Love to<br>Hear From You</h3>
+      <p class="ct-intro">Your extraordinary stay begins with a message. Reach us anytime.</p>
+      <form class="ct-form" onsubmit="return false">
+        <div class="fg"><input type="text" placeholder="Your Full Name"><div class="fline"></div></div>
+        <div class="fg"><input type="email" placeholder="Email Address"><div class="fline"></div></div>
+        <div class="fg"><input type="tel" placeholder="Phone / WhatsApp"><div class="fline"></div></div>
+        <div class="fg"><textarea rows="4" placeholder="Your Message or Inquiry"></textarea><div class="fline"></div></div>
+        <button class="btn-primary" style="width:100%;padding:1rem;font-size:.68rem;justify-content:center"><span>Send Message</span></button>
+      </form>
+      <div class="ct-info">
+        <div class="ci-card"><div class="ci-icon">📍</div><div><span class="ci-label">Address</span><span class="ci-val">Siddharthanagar-8, Ravi Path, Bhairahawa, Nepal 32900</span></div></div>
+        <div class="ci-card"><div class="ci-icon">✉️</div><div><span class="ci-label">Email</span><span class="ci-val">hoteldreampalacebhw@gmail.com</span></div></div>
+        <div class="ci-card"><div class="ci-icon">🏛</div><div><span class="ci-label">Near</span><span class="ci-val">20 min from Lumbini · Bhairahawa Airport · City Centre</span></div></div>
+      </div>
+      <div class="soc-row">
+        <a href="#" class="soc" title="Facebook">f</a>
+        <a href="#" class="soc" title="Instagram">ig</a>
+        <a href="#" class="soc" title="WhatsApp">wa</a>
+        <a href="#" class="soc" title="TripAdvisor">ta</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="ft-grid">
+    <div>
+      <div class="ft-brand-row">
+        <img class="ft-logo" src="https://i.postimg.cc/Vv04KXS6/480291439-122108598494756459-6087197609136198998-n-removebg-preview.png" alt="Hotel Dream Palace">
+        <div><span class="ft-brand-name">Dream Palace</span><span class="ft-brand-sub">Bhairahawa · Nepal</span></div>
+      </div>
+      <p class="ft-desc">Nepal's premier luxury hotel in the heart of Bhairahawa — your gateway to Lumbini and the spiritual wonders of southern Nepal. Luxury, comfort, and authentic Nepali warmth since 1996.</p>
+      <div class="soc-row">
+        <a href="#" class="soc" title="Facebook">f</a><a href="#" class="soc" title="Instagram">ig</a>
+        <a href="#" class="soc" title="WhatsApp">wa</a><a href="#" class="soc" title="TripAdvisor">ta</a>
+      </div>
+    </div>
+    <div>
+      <h4 class="ft-col-head">Quick Links</h4>
+      <ul class="ft-links">
+        <li><a href="#hero">Home</a></li><li><a href="#about">Our Story</a></li>
+        <li><a href="#rooms">Rooms &amp; Suites</a></li><li><a href="#services">Services</a></li>
+        <li><a href="#gallery">Gallery</a></li><li><a href="#contact">Contact Us</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4 class="ft-col-head">Experiences</h4>
+      <ul class="ft-links">
+        <li><a href="#">Lumbini Day Tours</a></li><li><a href="#">Multi-Cuisine Dining</a></li>
+        <li><a href="#">Wedding Packages</a></li><li><a href="#">Corporate Events</a></li>
+        <li><a href="#">Ayurvedic Spa</a></li><li><a href="#">City Sightseeing</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4 class="ft-col-head">Newsletter</h4>
+      <p class="ft-desc">Get exclusive deals, seasonal offers, and travel tips straight to your inbox.</p>
+      <div class="nl-wrap">
+        <input class="nl-inp" type="email" placeholder="Your email address">
+        <button class="nl-btn">Subscribe for Offers</button>
+      </div>
+    </div>
+  </div>
+  <div class="ft-bottom">
+    <p class="ft-copy">© 2025 Hotel Dream Palace, Bhairahawa, Nepal. All rights reserved.</p>
+    <button class="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑ Back to Top</button>
+  </div>
+  <a href="https://shadowcorp.netlify.app/" target="_blank" rel="noopener" class="watermark">Designed &amp; Developed by Shadow Corp · shadowcorp.netlify.app</a>
+</footer>
+
+<script>
+/* LOADER */
+window.addEventListener('load',()=>{
+  const loader=document.getElementById('loader'),lI=document.getElementById('loader-logo-img'),nI=document.getElementById('nav-logo-img');
+  setTimeout(()=>{
+    const lR=lI.getBoundingClientRect(),nR=nI.getBoundingClientRect();
+    const fly=lI.cloneNode();
+    fly.style.cssText='position:fixed;z-index:100000;width:'+lR.width+'px;height:'+lR.height+'px;left:'+lR.left+'px;top:'+lR.top+'px;transition:all .7s cubic-bezier(.4,0,.2,1);pointer-events:none;';
+    document.body.appendChild(fly);
+    ['.loader-title','.loader-subtitle','.loader-bar'].forEach(s=>{const e=document.querySelector(s);if(e)e.style.opacity='0';});
+    lI.style.opacity='0';
+    requestAnimationFrame(()=>requestAnimationFrame(()=>{fly.style.left=nR.left+'px';fly.style.top=nR.top+'px';fly.style.width=nR.width+'px';fly.style.height=nR.height+'px';}));
+    setTimeout(()=>{loader.classList.add('hidden');setTimeout(()=>{fly.remove();if(loader.parentNode)loader.remove();},900);},750);
+  },2300);
+});
+/* SCROLL PROGRESS */
+window.addEventListener('scroll',()=>{document.getElementById('scroll-progress').style.width=(window.scrollY/(document.documentElement.scrollHeight-window.innerHeight)*100)+'%';},{passive:true});
+/* NAVBAR */
+const navbar=document.getElementById('navbar');
+window.addEventListener('scroll',()=>{navbar.classList.toggle('scrolled',window.scrollY>80);},{passive:true});
+/* MOBILE NAV */
+const hamburger=document.getElementById('hamburger'),drawer=document.getElementById('nav-drawer'),overlay=document.getElementById('overlay');
+hamburger.addEventListener('click',()=>{hamburger.classList.add('open');drawer.classList.add('open');overlay.classList.add('visible');document.body.style.overflow='hidden';});
+function closeDrawer(){hamburger.classList.remove('open');drawer.classList.remove('open');overlay.classList.remove('visible');document.body.style.overflow='';}
+document.getElementById('drawer-close').addEventListener('click',closeDrawer);
+overlay.addEventListener('click',closeDrawer);
+document.querySelectorAll('#nav-drawer a').forEach(a=>a.addEventListener('click',closeDrawer));
+/* HERO SLIDESHOW */
+const slides=document.querySelectorAll('.hero-slide'),dots=document.querySelectorAll('.slide-dot');
+let cur=0;
+function goSlide(n){slides[cur].classList.remove('active');dots[cur].classList.remove('active');cur=(n+slides.length)%slides.length;slides[cur].classList.add('active');dots[cur].classList.add('active');}
+setInterval(()=>goSlide(cur+1),5500);
+dots.forEach((d,i)=>d.addEventListener('click',()=>goSlide(i)));
+/* PARTICLES */
+const canvas=document.getElementById('hero-canvas'),ctx=canvas.getContext('2d');
+const rsz=()=>{canvas.width=window.innerWidth;canvas.height=window.innerHeight;};
+rsz();window.addEventListener('resize',rsz,{passive:true});
+class Pt{constructor(){this.r();}r(){this.x=Math.random()*canvas.width;this.y=Math.random()*canvas.height;this.vx=(Math.random()-.5)*.32;this.vy=-Math.random()*.5-.1;this.s=Math.random()*2+.4;this.l=0;this.ml=Math.random()*210+90;}u(){this.x+=this.vx;this.y+=this.vy;this.l++;if(this.l>this.ml)this.r();const p=this.l/this.ml;this.a=p<.2?p*5*.25:p>.8?(1-p)*5*.25:.25;}d(){ctx.save();ctx.globalAlpha=this.a;ctx.fillStyle='#5B8DB8';ctx.beginPath();ctx.arc(this.x,this.y,this.s,0,Math.PI*2);ctx.fill();ctx.restore();}}
+const pts=Array.from({length:70},()=>{const p=new Pt();p.l=Math.floor(Math.random()*p.ml);return p;});
+(function loop(){ctx.clearRect(0,0,canvas.width,canvas.height);pts.forEach(p=>{p.u();p.d();});requestAnimationFrame(loop);})();
+/* HERO TILT */
+const heroTilt=document.getElementById('hero-tilt'),heroSec=document.getElementById('hero');
+heroSec.addEventListener('mousemove',e=>{const r=heroSec.getBoundingClientRect();heroTilt.style.transform='perspective(1000px) rotateY('+((e.clientX-r.left-r.width/2)/(r.width/2))*4.5+'deg) rotateX('+(-((e.clientY-r.top-r.height/2)/(r.height/2)))*3+'deg) translateZ(12px)';});
+heroSec.addEventListener('mouseleave',()=>heroTilt.style.transform='');
+/* OBSERVERS */
+const ro=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('visible');}),{threshold:.1,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.reveal,.rl,.rr').forEach(el=>ro.observe(el));
+const uo=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('animated');}),{threshold:.5});
+document.querySelectorAll('.uline').forEach(el=>uo.observe(el));
+/* COUNTERS */
+const co=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      const el=e.target,target=parseFloat(el.dataset.target),suffix=el.dataset.suffix||'',dec=el.dataset.decimal==='true',start=performance.now();
+      function t(now){const p=Math.min((now-start)/1900,1),ease=1-Math.pow(1-p,3),v=dec?(ease*target).toFixed(1):Math.floor(ease*target);el.textContent=v+suffix;if(p<1)requestAnimationFrame(t);}
+      requestAnimationFrame(t);co.unobserve(el);
+    }
+  });
+},{threshold:.5});
+document.querySelectorAll('[data-target]').forEach(el=>co.observe(el));
+/* GALLERY LIGHTBOX */
+const gIs=document.querySelectorAll('.gi img'),lb=document.getElementById('lightbox'),lbImg=document.getElementById('lb-img');
+let lbIdx=0;
+gIs.forEach((img,i)=>img.parentElement.addEventListener('click',()=>{lbIdx=i;lbImg.src=img.src.replace('w=800','w=1400');lb.classList.add('open');document.body.style.overflow='hidden';}));
+const closeLb=()=>{lb.classList.remove('open');document.body.style.overflow='';};
+document.getElementById('lb-close').addEventListener('click',closeLb);
+document.getElementById('lb-prev').addEventListener('click',()=>{lbIdx=(lbIdx-1+gIs.length)%gIs.length;lbImg.src=gIs[lbIdx].src.replace('w=800','w=1400');});
+document.getElementById('lb-next').addEventListener('click',()=>{lbIdx=(lbIdx+1)%gIs.length;lbImg.src=gIs[lbIdx].src.replace('w=800','w=1400');});
+lb.addEventListener('click',e=>{if(e.target===lb)closeLb();});
+document.addEventListener('keydown',e=>{if(!lb.classList.contains('open'))return;if(e.key==='Escape')closeLb();if(e.key==='ArrowLeft')document.getElementById('lb-prev').click();if(e.key==='ArrowRight')document.getElementById('lb-next').click();});
+/* SMOOTH ANCHORS */
+document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',function(e){const t=document.querySelector(this.getAttribute('href'));if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'});}}));
+/* BOOKING DATES */
+const today=new Date(),tmr=new Date(today),nw=new Date(today);
+tmr.setDate(tmr.getDate()+1);nw.setDate(nw.getDate()+7);
+const fmt=d=>d.toISOString().split('T')[0];
+const ci=document.getElementById('check-in'),co2=document.getElementById('check-out');
+if(ci){ci.value=fmt(tmr);ci.min=fmt(today);}
+if(co2){co2.value=fmt(nw);co2.min=fmt(tmr);}
+</script>
+</body>
+</html>
